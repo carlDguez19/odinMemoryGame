@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react"
+import { Card } from "./Card";
+import { TitleScore } from "./TitleScore";
 
 export function Gameboard(){
     const [currScore, setCurrScore] = useState(0);
@@ -46,7 +48,7 @@ export function Gameboard(){
             let randIndex = getRandomNumber();
             let temp = cards[randIndex];
             cards[randIndex] = cards[i];
-            cards[i] = temp;
+            cards[i] = temp;//if currScore is higher than bestScore then update bestScore aswell
         }
         setCards(cards);
     }
@@ -72,12 +74,13 @@ export function Gameboard(){
     }
 
     return (
-        <div className="gameArea">
-            {cards.map((card) => (
-                <div className="pokeCard" onClick={() => determineValue(card.id)}>
-                    <img key={card.id} src={card.image} alt={card.name} className="pokeImg" />
-                </div>
-            ))}
+        <div className="game">
+            <TitleScore currScore = {currScore} bestScore = {bestScore}/>
+            <div className="cardArea">
+                {cards.map((card) => (
+                    <Card key = {card.id} imgurl = {card.image} alt = {card.name} onClick = {() => determineValue(card.id)}/>
+                ))}
+            </div>
         </div>
     )
 

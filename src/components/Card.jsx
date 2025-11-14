@@ -1,7 +1,8 @@
-export function Card({ url, onClick}) {
+export function Card({ key, imgurl, alt, onClick}) {
     return(
-        <div className="notClicked" onClick={onClick}>
-            <img src={url} alt="card image" />
+        <div className="pokeCard" key = {key} onClick={onClick}>
+            <img src={imgurl} alt={alt} className="pokeImg"/>
+            <div className="pokeName">{alt}</div>
         </div>
     )
 }

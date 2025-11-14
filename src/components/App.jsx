@@ -8,7 +8,6 @@ export function App() {
 
   return (
     <div className="memoryGame">
-      //title/score area goes here
       <Gameboard/>
     </div>
   )

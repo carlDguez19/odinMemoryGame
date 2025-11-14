@@ -10,7 +10,7 @@ export function Gameboard(){
             try{
                 const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=12');
                 const data = await res.json();//12 cards for the gameboard;
-
+                console.log(data.results);
                 const cardData = await Promise.all(data.results.map(async (pokemon) => {
                     const pokemonRes = await fetch(pokemon.url);
                     const pokemonData = await pokemonRes.json();
@@ -30,12 +30,54 @@ export function Gameboard(){
         }
         fetchCards();
     }, []);
+    
+    function resetCardsClicked(){
+        for(let card of cards){
+            card.clicked = false;
+        }
+    }
+
+    function getRandomNumber(){
+        return Math.floor(Math.random() * 12);
+    }
+
+    function shuffleCards(){
+        for(let i = 0; i < cards.length; i++){
+            let randIndex = getRandomNumber();
+            let temp = cards[randIndex];
+            cards[randIndex] = cards[i];
+            cards[i] = temp;
+        }
+        setCards(cards);
+    }
+
+    function determineValue(id){
+        for(let card of cards){
+            if(card.id === id){
+                if(card.clicked === false){
+                    card.clicked = true;
+                    setCurrScore(currScore + 1);
+                    if(currScore > bestScore){
+                        setBestScore(currScore);
+                    }
+                    shuffleCards();
+                    //if currScore is higher than bestScore then update bestScore aswell
+                }else{
+                    setCurrScore(0);
+                    resetCardsClicked();
+                    //i have to reset all cards to not clicked here
+                }
+            }
+        }
+    }
 
     return (
-        <div className="pokeCard">
-            {cards.map((card) => {
-                <img key={pokemon.id} src={card.image} alt={pokemon.name} className="pokeImg" />
-            })}
+        <div className="gameArea">
+            {cards.map((card) => (
+                <div className="pokeCard" onClick={() => determineValue(card.id)}>
+                    <img key={card.id} src={card.image} alt={card.name} className="pokeImg" />
+                </div>
+            ))}
         </div>
     )
 

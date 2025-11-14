@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Gameboard } from './Gameboard'
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
@@ -8,7 +9,7 @@ export function App() {
   return (
     <div className="memoryGame">
       //title/score area goes here
-      //gameboard area goes here
+      <Gameboard/>
     </div>
   )
 }

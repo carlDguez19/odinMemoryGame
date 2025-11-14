@@ -8,7 +8,7 @@ export function Gameboard(){
     useEffect(() => {
         async function fetchCards() {
             try{
-                const res = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=12/');
+                const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=12');
                 const data = await res.json();//12 cards for the gameboard;
 
                 const cardData = await Promise.all(data.results.map(async (pokemon) => {

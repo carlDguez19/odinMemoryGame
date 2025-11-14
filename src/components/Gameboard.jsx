@@ -34,9 +34,8 @@ export function Gameboard(){
     }, []);
     
     function resetCardsClicked(){
-        for(let card of cards){
-            card.clicked = false;
-        }
+        let reset = cards.map((card) => ({...card, clicked: false}));
+        setCards(reset);
     }
 
     function getRandomNumber(){
@@ -44,25 +43,25 @@ export function Gameboard(){
     }
 
     function shuffleCards(){
+        let shuffled = [...cards];
         for(let i = 0; i < cards.length; i++){
             let randIndex = getRandomNumber();
-            let temp = cards[randIndex];
-            cards[randIndex] = cards[i];
-            cards[i] = temp;//if currScore is higher than bestScore then update bestScore aswell
+            let temp = shuffled[randIndex];
+            shuffled[randIndex] = shuffled[i];
+            shuffled[i] = temp;//if currScore is higher than bestScore then update bestScore aswell
         }
         setCards(cards);
     }
 
     function determineValue(id){
-        for(let card of cards){
+        let updatedCards = cards.map((card) => {
             if(card.id === id){
                 if(card.clicked === false){
-                    card.clicked = true;
-                    setCurrScore(currScore + 1);
-                    if(currScore > bestScore){
-                        setBestScore(currScore);
+                    setCurrScore(prev => prev +1);
+                    if(currScore >= bestScore){
+                        setBestScore(currScore + 1);
                     }
-                    shuffleCards();
+                    return {...card, clicked: true};
                     //if currScore is higher than bestScore then update bestScore aswell
                 }else{
                     setCurrScore(0);
@@ -70,7 +69,10 @@ export function Gameboard(){
                     //i have to reset all cards to not clicked here
                 }
             }
-        }
+            return card;
+        });
+        setCards(updatedCards);
+        shuffleCards();
     }
 
     return (

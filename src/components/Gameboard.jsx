@@ -50,13 +50,13 @@ export function Gameboard(){
             shuffled[randIndex] = shuffled[i];
             shuffled[i] = temp;//if currScore is higher than bestScore then update bestScore aswell
         }
-        setCards(cards);
+        setCards(shuffled);
     }
 
     function determineValue(id){
         let updatedCards = cards.map((card) => {
-            if(card.id === id){
-                if(card.clicked === false){
+            if(card.id == id){
+                if(!card.clicked){
                     setCurrScore(prev => prev +1);
                     if(currScore >= bestScore){
                         setBestScore(currScore + 1);
@@ -73,6 +73,7 @@ export function Gameboard(){
         });
         setCards(updatedCards);
         shuffleCards();
+        console.log(cards);
     }
 
     return (

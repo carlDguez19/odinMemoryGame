@@ -1,18 +1,28 @@
+// Core game logic
+//handles card fetching, scoring, shuffle behavior, and click evaluation
 import { useState, useEffect } from "react"
 import { Card } from "./Card";
 import { TitleScore } from "./TitleScore";
 
 export function Gameboard(){
+    //tracks score for current game
     const [currScore, setCurrScore] = useState(0);
+    
+    //tracks best overall score across rounds
     const [bestScore, setBestScore] = useState(0);
+    
+    //stores the array of card objects used in game
     const [cards, setCards] = useState([]);
 
+    //fetch pokemon card data on render
     useEffect(() => {
         async function fetchCards() {
             try{
                 const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=12');
                 const data = await res.json();//12 cards for the gameboard;
                 console.log(data.results);
+
+                //fetch sprite and id for each pokemon
                 const cardData = await Promise.all(data.results.map(async (pokemon) => {
                     const pokemonRes = await fetch(pokemon.url);
                     const pokemonData = await pokemonRes.json();
@@ -20,7 +30,7 @@ export function Gameboard(){
                         id: pokemonData.id,
                         name: pokemonData.name,
                         image: pokemonData.sprites.front_default,
-                        clicked: false
+                        clicked: false //tracks if card has been selected during this game
                     };
                 })
             );
@@ -33,11 +43,12 @@ export function Gameboard(){
         fetchCards();
     }, []);
     
-    function resetCardsClicked(){
-        let reset = cards.map((card) => ({...card, clicked: false}));
-        setCards(reset);
-    }
+    // function resetCardsClicked(){
+    //     let reset = cards.map((card) => ({...card, clicked: false}));
+    //     setCards(reset);
+    // }
 
+    //returns a random index used for shuffling
     function getRandomNumber(){
         return Math.floor(Math.random() * 12);
     }

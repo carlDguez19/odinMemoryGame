@@ -19,6 +19,7 @@ Each time the player clicks a card:
 2. 	If new, the score increases and the cards reshuffle.
 3. 	If repeated, the score resets and the round restarts.
 4. 	The best score updates when a new high score is reached.
+
 This project demonstrates core React concepts such as:
 - 	`useState` for managing game logic
 - 	Passing props between components

@@ -1,16 +1,90 @@
-# React + Vite
+# Memory Game
+A fast‑paced React memory challenge where the goal is to click unique cards without repeating any previous selections. Each correct choice increases the score, while clicking a previously selected card resets the round. The project focuses on state management, component communication, and clean UI updates.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## Features
+- 	Dynamic card shuffling after every click
+- 	Score tracking with best‑score persistence
+- 	Modular React components
+- 	Responsive layout
+- 	Clean UI built with custom CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## How It Works
+The game displays a grid of cards.
+Each time the player clicks a card:
+1. 	The game checks if the card was clicked before.
+2. 	If new, the score increases and the cards reshuffle.
+3. 	If repeated, the score resets and the round restarts.
+4. 	The best score updates when a new high score is reached.
+This project demonstrates core React concepts such as:
+- 	`useState` for managing game logic
+- 	Passing props between components
+- 	Conditional logic
+- 	Array manipulation
+- 	Component‑based architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```txt
+ODINMEMORYGAME/
+│
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── App.jsx
+│   │   ├── Card.jsx
+│   │   ├── Gameboard.jsx
+│   │   └── TitleScore.jsx
+│   │
+│   ├── styles/
+│   │   ├── gameboard.css
+│   │   └── index.css
+│   │
+│   ├── main.jsx
+│
+├── package.json
+├── vite.config.js
+└── README.md
+
+```
+
+---
+
+## Tech Stack
+- 	React (Vite)
+- 	JavaScript (ES6+)
+- 	CSS
+- 	Node.js
+
+---
+
+## Running the Project
+Install dependencies:
+```bash npm install ```
+Start the development server:
+```bash npm run dev ```
+Build for production:
+```bash npm run build ```
+
+---
+
+## What I Learned
+- 	Managing game logic with React state
+- 	Preventing repeated selections using arrays
+- 	Shuffling arrays on every render
+- 	Structuring a small game into reusable components
+- 	Styling responsive layouts
+
+---
+
+## Future Improvements
+- 	Add animations
+- 	Add difficulty levels
+- 	Add card themes
+- 	Add sound effects
+- 	Add a timer mode

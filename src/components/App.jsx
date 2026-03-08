@@ -1,13 +1,12 @@
-import { useState } from 'react'
+// Root component for the Memory Game application
+// Responsible for rendering the Gameboard and servig as the top level wrapper
 import { Gameboard } from './Gameboard'
-// import viteLogo from '/vite.svg'
-// import './App.css'
 
 export function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="memoryGame">
+      {/* Main game container. renders the full memory game interface */}
       <Gameboard/>
     </div>
   )

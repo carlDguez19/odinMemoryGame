@@ -42,38 +42,35 @@ export function Gameboard(){
         return Math.floor(Math.random() * 12);
     }
 
-    function shuffleCards(){
-        let shuffled = [...cards];
+    function shuffleCards(arr){
+        let shuffled = [...arr];
         for(let i = 0; i < cards.length; i++){
             let randIndex = getRandomNumber();
             let temp = shuffled[randIndex];
             shuffled[randIndex] = shuffled[i];
             shuffled[i] = temp;//if currScore is higher than bestScore then update bestScore aswell
         }
-        setCards(shuffled);
+        return shuffled;
     }
 
     function determineValue(id){
-        let updatedCards = cards.map((card) => {
-            if(card.id == id){
-                if(!card.clicked){
-                    setCurrScore(prev => prev +1);
-                    if(currScore >= bestScore){
-                        setBestScore(currScore + 1);
-                    }
-                    return {...card, clicked: true};
-                    //if currScore is higher than bestScore then update bestScore aswell
-                }else{
-                    setCurrScore(0);
-                    resetCardsClicked();
-                    //i have to reset all cards to not clicked here
-                }
-            }
-            return card;
-        });
-        setCards(updatedCards);
-        shuffleCards();
-        console.log(cards);
+        let currCard = cards.find(card => card.id === id);
+
+        if(currCard.clicked){
+            //reset everything
+            //reset clicks
+            let newDeck = cards.map((card) => ({...card, clicked: false}));
+            let shuffled = shuffleCards(newDeck);
+            setCards(shuffled);
+            setCurrScore(0);
+        }else{
+            //award point
+            let newDeck = cards.map((card) => card.id === id ? ({...card, clicked: true}) : card);
+            let shuffled = shuffleCards(newDeck);
+            setCards(shuffled);
+            setCurrScore(prev => prev + 1);
+            setBestScore( prev => (currScore + 1 > bestScore ? currScore + 1 : prev))
+        }
     }
 
     return (
@@ -85,15 +82,5 @@ export function Gameboard(){
                 ))}
             </div>
         </div>
-    )
-
-    //add onclick function (determine reset or currScore increase) here or it can be imported from utils
-    //along with some shuffle function
-    
-    //connect to api to get card images
-    //generate card images on gameboard
-
-    //might need wrapper function to call setCurrScore and setBestScore
-
-    //finally return the gameboard jsx 
+    ) 
 }

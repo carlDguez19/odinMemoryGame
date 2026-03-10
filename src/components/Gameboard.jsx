@@ -53,34 +53,38 @@ export function Gameboard(){
         return Math.floor(Math.random() * 12);
     }
 
+    //Shuffles the card array by swapping random positions
     function shuffleCards(arr){
         let shuffled = [...arr];
-        for(let i = 0; i < cards.length; i++){
+        for(let i = 0; i < cards.length; i++){//based on length of deck of cards
             let randIndex = getRandomNumber();
             let temp = shuffled[randIndex];
             shuffled[randIndex] = shuffled[i];
-            shuffled[i] = temp;//if currScore is higher than bestScore then update bestScore aswell
+            shuffled[i] = temp;
         }
         return shuffled;
     }
 
+    //handle card click. determine if new card clicked or repeated card click
     function determineValue(id){
+        //find clicked card
         let currCard = cards.find(card => card.id === id);
 
+        //if card had previously been clicked then player loses round
         if(currCard.clicked){
-            //reset everything
+            //reset score
             //reset clicks
             let newDeck = cards.map((card) => ({...card, clicked: false}));
             let shuffled = shuffleCards(newDeck);
             setCards(shuffled);
             setCurrScore(0);
-        }else{
+        }else{//new card clicked
             //award point
-            let newDeck = cards.map((card) => card.id === id ? ({...card, clicked: true}) : card);
+            let newDeck = cards.map((card) => card.id === id ? ({...card, clicked: true}) : card);//set card as clicked
             let shuffled = shuffleCards(newDeck);
             setCards(shuffled);
-            setCurrScore(prev => prev + 1);
-            setBestScore( prev => (currScore + 1 > bestScore ? currScore + 1 : prev))
+            setCurrScore(prev => prev + 1);//update current score
+            setBestScore( prev => (currScore + 1 > bestScore ? currScore + 1 : prev))//update best score if curr score is better
         }
     }
 
